@@ -29,6 +29,8 @@ import org.springframework.security.core.Authentication;
 import com.peloteros.app.peloteros.entity.AuthCredentials;
 import com.peloteros.app.peloteros.entity.Roles;
 import com.peloteros.app.peloteros.entity.Usuarios;
+import com.peloteros.app.peloteros.security.AuthResponse;
+import com.peloteros.app.peloteros.security.JwtUtil;
 import com.peloteros.app.peloteros.service.UsuariosService;
 
 @RestController 
@@ -38,6 +40,9 @@ public class UsuariosController {
 	
 	@Autowired
 	private UsuariosService usuariosService;
+	
+	@Autowired
+    private JwtUtil jwtUtil;
 	
 	private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -54,7 +59,11 @@ public class UsuariosController {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getCorreo(), authRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok("Usuario autenticado con éxito");
+
+            // Generar el token JWT
+            String token = jwtUtil.generateToken(authRequest.getCorreo());
+
+            return ResponseEntity.ok(new AuthResponse(token)); // Crea un objeto que contenga el token
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }

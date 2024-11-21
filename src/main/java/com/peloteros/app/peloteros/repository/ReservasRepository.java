@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.peloteros.app.peloteros.entity.Reservas;
-import com.peloteros.app.peloteros.entity.Usuarios;
 
 public interface ReservasRepository extends JpaRepository<Reservas, Integer>{
 	

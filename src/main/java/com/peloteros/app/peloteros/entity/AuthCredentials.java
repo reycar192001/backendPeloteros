@@ -1,6 +1,5 @@
 package com.peloteros.app.peloteros.entity;
 
-import jakarta.persistence.Column;
 
 public class AuthCredentials {
 	

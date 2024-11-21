@@ -1,5 +1,6 @@
 package com.peloteros.app.peloteros.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -25,32 +27,25 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable) // Deshabilita CSRF para APIs REST
+            .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authz -> authz
-            		.requestMatchers("/canchas/listar").permitAll()
-                    .requestMatchers("/roles/listar").permitAll()
-                    .requestMatchers("/roles/editar/*").permitAll()
-                    .requestMatchers("/roles/agregar").permitAll()
-                    .requestMatchers("/roles/buscar/*").permitAll()
-                    .requestMatchers("/usuarios/agregar").permitAll()
-                    .requestMatchers("/usuarios/buscar/*").permitAll()
-                    .requestMatchers("/usuarios/listar").permitAll()
-                    .requestMatchers("/usuarios/login").permitAll()
-                    
-                    .requestMatchers("/horarioscanchas/listar").permitAll()
-                    .requestMatchers("/reservas/listar").permitAll()
-                    .requestMatchers("/reservas/buscar/*").permitAll()
-                    .requestMatchers("/reservas/editar/*").permitAll()
-                    .requestMatchers("/reservas/agregar").permitAll()
-                    .requestMatchers("/reservas/borrar/*").hasRole("CLIENTE")
-                .anyRequest().authenticated()
-            )
-            .httpBasic() // Habilita la autenticación básica
-            .and()
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Sin estado para APIs REST
+                .requestMatchers("/usuarios/login").permitAll()
+                .requestMatchers("/usuarios/agregar").permitAll()
+                .requestMatchers("/canchas/xfechanum/**").permitAll()
+                .requestMatchers("/canchas/xfechanum/**").permitAll()
+                .requestMatchers("/horarioscanchas/**").permitAll()
+                .requestMatchers("/reservas/**").permitAll()
+                .anyRequest().authenticated())
+            .httpBasic().disable() // Desactiva la autenticación básica
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Sin estado
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Agrega el filtro JWT
 
         return http.build();
     }

@@ -1,7 +1,10 @@
 package com.peloteros.app.peloteros.service;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.peloteros.app.peloteros.entity.BuscarDisponibilidadModel;
 import com.peloteros.app.peloteros.entity.Usuarios;
 import com.peloteros.app.peloteros.repository.UsuariosRepository;
 
@@ -76,5 +80,7 @@ public class UsuariosServiceImpl implements UsuariosService,UserDetailsService{
 	    }
 	    throw new UsernameNotFoundException("¡Error, Username no existe en la base de datos!");
 	}
+	
+	
 	
 }

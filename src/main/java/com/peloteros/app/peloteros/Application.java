@@ -13,12 +13,13 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 	
+/*
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {                              
-                            registry.addMapping("").allowedOrigins("")
+                            registry.addMapping("*").allowedOrigins("*")
                                     .allowedMethods("*")
                                     .exposedHeaders("*");                            
                             registry.addMapping("/**")
@@ -26,5 +27,18 @@ public class Application {
 			}
 		};
 	}
-
+*/
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+	    return new WebMvcConfigurer() {
+	        @Override
+	        public void addCorsMappings(CorsRegistry registry) {                              
+	            registry.addMapping("/**") // Permitir todos los endpoints
+	                    .allowedOrigins("*") // Permitir todos los orígenes
+	                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
+	                    .allowedHeaders("*") // Permitir todos los headers
+	                    .exposedHeaders("Authorization"); // Exponer el header de autorización
+	        }
+	    };
+	}
 }

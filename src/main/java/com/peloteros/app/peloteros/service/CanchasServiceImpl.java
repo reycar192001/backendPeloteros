@@ -1,11 +1,17 @@
 package com.peloteros.app.peloteros.service;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.peloteros.app.peloteros.entity.BuscarDisponibilidadModel;
 import com.peloteros.app.peloteros.entity.Canchas;
 import com.peloteros.app.peloteros.repository.CanchasRepository;
 
@@ -43,6 +49,25 @@ public class CanchasServiceImpl implements CanchasService{
 	@Transactional(readOnly = true)
 	public Collection<Canchas> findAll() {
 		return repository.findAll();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<BuscarDisponibilidadModel> findDisponibilidadByFechaAndJugadores(Date fechaConsulta, int numJugadores) {
+		List<Object[]> results = repository.findDisponibilidadByFechaAndJugadores(fechaConsulta, numJugadores);
+	    
+	    List<BuscarDisponibilidadModel> disponibilidadList = new ArrayList<>();
+	    for (Object[] row : results) {
+	        BuscarDisponibilidadModel disponibilidad = new BuscarDisponibilidadModel();
+	        disponibilidad.setHorarioId((Integer) row[0]);
+	        disponibilidad.setHoraInicio((Time) row[1]);
+	        disponibilidad.setCanchaId((Integer) row[2]);
+	        disponibilidad.setNumeroCancha((Integer) row[3]);
+	        disponibilidad.setEstado((String) row[4]);
+	        disponibilidadList.add(disponibilidad);
+	    }
+	    
+	    return disponibilidadList;
 	}
 
 }

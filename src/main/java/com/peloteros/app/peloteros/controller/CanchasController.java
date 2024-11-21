@@ -1,5 +1,7 @@
 package com.peloteros.app.peloteros.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.peloteros.app.peloteros.entity.BuscarDisponibilidadModel;
 import com.peloteros.app.peloteros.entity.Canchas;
 import com.peloteros.app.peloteros.service.CanchasService;
 
@@ -114,5 +118,16 @@ public class CanchasController {
 	    }
 	    
 	    return new ResponseEntity<>("Cancha ID " + CanchaID + " no encontrado", HttpStatus.NOT_FOUND);
+	}
+	
+	@GetMapping("/xfechanum/{fechaConsulta}/{numJugadores}")
+	public Collection<BuscarDisponibilidadModel> findDisponibilidadByFechaAndJugadores(
+	        @PathVariable("fechaConsulta") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaConsulta,
+	        @PathVariable("numJugadores") int numJugadores) {
+	    
+		// Convertir LocalDate a java.sql.Date
+	    	Date sqlDate = Date.valueOf(fechaConsulta);
+	    // Llamar al servicio con la fecha y el número de cancha
+	    return canchasService.findDisponibilidadByFechaAndJugadores(sqlDate, numJugadores);
 	}
 }
