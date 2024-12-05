@@ -165,5 +165,26 @@ public class UsuariosController {
 
 	    return new ResponseEntity<>("Usuario ID " + UsuarioID + " no encontrado", HttpStatus.NOT_FOUND);
 	}
+	
+	@GetMapping("/buscarxcorreo/{correo}")
+	public ResponseEntity<?> buscarxcorreo(@PathVariable String correo) {
+	    Usuarios usuarios = usuariosService.findByUsername(correo);
+	    if (usuarios != null) {
+	        Map<String, Object> usuarioMap = new HashMap<>();
+	        usuarioMap.put("UsuarioID", usuarios.getUsuarioID());
+	        usuarioMap.put("Nombre", usuarios.getNombre());
+	        usuarioMap.put("Correo", usuarios.getCorreo());
+	        usuarioMap.put("Telefono", usuarios.getTelefono());
+	        usuarioMap.put("Password", usuarios.getPassword());
+
+	        Roles roles = usuarios.getRolesObj();
+	        if (roles!= null) {
+	            usuarioMap.put("RoleID", roles.getRoleID());
+	        }
+
+	        return new ResponseEntity<>(usuarioMap, HttpStatus.OK); // Código de estado HTTP
+	    }
+	    return new ResponseEntity<>("El correo:  " + correo + " no se ha encontrado en la BD", HttpStatus.NOT_FOUND); // Código de estado HTTP
+	}
 
 }

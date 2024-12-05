@@ -19,6 +19,9 @@ public interface ReservasRepository extends JpaRepository<Reservas, Integer>{
 	@Query(value="SELECT * from reservas where  fecha_reserva=?1",nativeQuery = true)
 	public abstract Collection<Reservas> findAll_withDate(Date fecha);
 	
+	@Query(value = "SELECT MAX(reservaid) FROM reservas", nativeQuery = true)
+    Long findMaxCanchaId();
+	
 	
 	
 }

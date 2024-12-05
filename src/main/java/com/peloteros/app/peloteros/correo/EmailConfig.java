@@ -1,7 +1,6 @@
-package email;
+package com.peloteros.app.peloteros.correo;
 
 import java.util.Properties;
-import lombok.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -10,8 +9,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 public class EmailConfig {    
     private String host = "smtp.gmail.com";    
     private int port = 587;    
-    private String username = "lauchun.sm@gmail.com";    
-    private String password = "iqxykgcdpwwqloaz";
+    private String username = "peloteros.ch@gmail.com";    
+    private String password = "oftiphyigdzshlet";
 
     @Bean
     public JavaMailSenderImpl javaMailSender() {

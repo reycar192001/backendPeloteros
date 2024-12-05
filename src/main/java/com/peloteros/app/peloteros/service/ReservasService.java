@@ -15,7 +15,7 @@ public interface ReservasService {
 	public abstract void delete(Integer ReservaID);
 	public abstract Reservas findById(Integer ReservaID);
 	public abstract Collection<Reservas> findAll();
-	
+	public Long getMaxCanchaId();
 	public abstract Collection<Object[]> findAll_withProductos();
 	public abstract Collection<Reservas> findAll_withDate(Date fecha);
 	public abstract Reservas findReservasProductosById(Integer ReservaID);

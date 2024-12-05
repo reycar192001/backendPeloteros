@@ -15,8 +15,11 @@ import com.peloteros.app.peloteros.entity.Canchas;
 
 public interface CanchasRepository extends JpaRepository<Canchas, Integer>{
 	
-	@Query(value = "{call obtener_disponibilidad_por_fecha3(:fecha_consulta, :num_jugadores)}", nativeQuery = true)
+	@Query(value = "{call obtener_disponibilidad_por_fechas(:fecha_consulta, :num_jugadores)}", nativeQuery = true)
 	public abstract List<Object[]> findDisponibilidadByFechaAndJugadores(
 	    @Param("fecha_consulta") Date fechaConsulta, 
 	    @Param("num_jugadores") int numJugadores);
+	
+	
+	
 }
