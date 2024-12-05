@@ -25,11 +25,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-<<<<<<< Updated upstream
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 300)) // Token válido por 1 min
-=======
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 4)) // Token válido por 1 min
->>>>>>> Stashed changes
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }

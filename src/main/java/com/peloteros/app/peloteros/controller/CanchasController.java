@@ -27,11 +27,6 @@ import com.peloteros.app.peloteros.entity.BuscarDisponibilidadModel;
 import com.peloteros.app.peloteros.entity.Canchas;
 import com.peloteros.app.peloteros.service.CanchasService;
 
-/**
- * Controlador REST para gestionar las operaciones de las canchas.
- * Proporciona métodos para listar, buscar, agregar, editar y eliminar canchas,
- * así como consultar la disponibilidad de las canchas según la fecha y el número de jugadores.
- */
 @RestController 
 @RequestMapping("/canchas")
 @CrossOrigin(origins= {"http://localhost/5500"})
@@ -40,17 +35,9 @@ public class CanchasController {
 	@Autowired
 	private CanchasService canchasService;
 	
-	/**
-     * Constructor del controlador.
-     */
 	public CanchasController() {
 	}
 	
-	/**
-     * Listar todas las canchas.
-     * 
-     * @return una lista de canchas en formato JSON
-     */
 	@GetMapping("/listar")
 	public ResponseEntity<List<Map<String, Object>>> listar() {
 	    Collection<Canchas> repository = canchasService.findAll();
@@ -76,12 +63,6 @@ public class CanchasController {
 	    return new ResponseEntity<>(responseList, HttpStatus.OK);
 	}
 	
-	/**
-     * Buscar una cancha por su ID.
-     * 
-     * @param CanchaID el ID de la cancha a buscar
-     * @return la cancha encontrada o un mensaje de error si no se encuentra
-     */
 	@GetMapping("/buscar/{CanchaID}") //Http Method GET
 	public ResponseEntity<?> buscar(@PathVariable Integer CanchaID) {
 	    Canchas canchas = canchasService.findById(CanchaID);
@@ -99,25 +80,12 @@ public class CanchasController {
 	    return new ResponseEntity<>("Cancha  " + CanchaID + " no encontrada", HttpStatus.NOT_FOUND); // Código de estado HTTP
 	}
 	
-	/**
-     * Agregar una nueva cancha.
-     * 
-     * @param canchas los datos de la nueva cancha
-     * @return un mensaje indicando que la cancha fue creada
-     */
 	@PostMapping("/agregar") //Http Method POST
 	public ResponseEntity<?> agregar(@RequestBody Canchas canchas) {	
 		canchasService.insert(canchas);		
 		return new ResponseEntity<>("Cancha Creado",HttpStatus.CREATED); //Http status code	
 	}
 	
-	/**
-     * Editar los detalles de una cancha existente.
-     * 
-     * @param CanchaID el ID de la cancha a editar
-     * @param newCancha los nuevos detalles de la cancha
-     * @return un mensaje indicando el resultado de la edición
-     */
 	@PutMapping("/editar/{CanchaID}") //Http Method PUT
 	public ResponseEntity<?> editar(@PathVariable Integer CanchaID,
                                         @RequestBody Canchas newCancha) {		
@@ -134,12 +102,6 @@ public class CanchasController {
 		return new ResponseEntity<>("Cancha ID " + CanchaID + " no encontrado",HttpStatus.NOT_FOUND); //Http status code
 	}
 	
-	/**
-     * Eliminar una cancha por su ID.
-     * 
-     * @param CanchaID el ID de la cancha a eliminar
-     * @return un mensaje indicando el resultado de la eliminación
-     */
 	@DeleteMapping("/borrar/{CanchaID}")
 	public ResponseEntity<?> borrar(@PathVariable Integer CanchaID) {
 	    Canchas canchas = canchasService.findById(CanchaID);
@@ -157,14 +119,6 @@ public class CanchasController {
 	    
 	    return new ResponseEntity<>("Cancha ID " + CanchaID + " no encontrado", HttpStatus.NOT_FOUND);
 	}
-	
-	/**
-     * Buscar la disponibilidad de las canchas según la fecha y el número de jugadores.
-     * 
-     * @param fechaConsulta la fecha de consulta de disponibilidad
-     * @param numJugadores el número de jugadores para la consulta
-     * @return una lista de la disponibilidad de las canchas
-     */
 	
 	@GetMapping("/xfechanum/{fechaConsulta}/{numJugadores}")
 	public Collection<BuscarDisponibilidadModel> findDisponibilidadByFechaAndJugadores(

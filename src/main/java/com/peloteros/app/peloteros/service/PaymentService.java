@@ -9,10 +9,6 @@ import com.stripe.param.PaymentIntentCancelParams;
 import com.stripe.param.PaymentIntentConfirmParams;
 import com.stripe.param.PaymentIntentCreateParams;
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 @Service
 public class PaymentService {
 	
