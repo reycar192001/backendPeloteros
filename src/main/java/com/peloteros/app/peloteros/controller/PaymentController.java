@@ -1,11 +1,18 @@
 package com.peloteros.app.peloteros.controller;
 
+<<<<<<< Updated upstream
 import com.peloteros.app.peloteros.entity.PaymentIntentDTO;
+=======
+>>>>>>> Stashed changes
 import com.peloteros.app.peloteros.service.PaymentService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 
+<<<<<<< Updated upstream
 
+=======
+import email.PaymentIntentDTO;
+>>>>>>> Stashed changes
 
 import java.util.Map;
 
@@ -14,7 +21,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+<<<<<<< Updated upstream
 @CrossOrigin(origins= {"http://localhost/5500"})
+=======
+>>>>>>> Stashed changes
 public class PaymentController {
 
     @Autowired
@@ -67,3 +77,7 @@ public class PaymentController {
         }
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

@@ -1,9 +1,7 @@
 package com.peloteros.app.peloteros.service;
 
-import java.sql.Date;
 import java.util.Collection;
 
-import com.peloteros.app.peloteros.entity.BuscarDisponibilidadModel;
 import com.peloteros.app.peloteros.entity.Usuarios;
 
 public interface UsuariosService {
