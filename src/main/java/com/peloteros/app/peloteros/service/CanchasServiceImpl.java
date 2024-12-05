@@ -51,6 +51,8 @@ public class CanchasServiceImpl implements CanchasService{
 		return repository.findAll();
 	}
 	
+	
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Collection<BuscarDisponibilidadModel> findDisponibilidadByFechaAndJugadores(Date fechaConsulta, int numJugadores) {
@@ -63,7 +65,8 @@ public class CanchasServiceImpl implements CanchasService{
 	        disponibilidad.setHoraInicio((Time) row[1]);
 	        disponibilidad.setCanchaId((Integer) row[2]);
 	        disponibilidad.setNumeroCancha((Integer) row[3]);
-	        disponibilidad.setEstado((String) row[4]);
+	        disponibilidad.setPrecioHora((Double) row[4]);
+	        disponibilidad.setEstado((String) row[5]);
 	        disponibilidadList.add(disponibilidad);
 	    }
 	    

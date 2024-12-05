@@ -64,5 +64,11 @@ public class ReservasServiceImpl implements ReservasService{
 	public Reservas findReservasProductosById(Integer ReservaID) {
 		return repository.findById(ReservaID).orElse(null);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Long getMaxCanchaId() {
+        return repository.findMaxCanchaId();
+    }
 
 }

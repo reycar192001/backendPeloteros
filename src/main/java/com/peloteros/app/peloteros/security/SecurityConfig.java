@@ -1,13 +1,17 @@
 package com.peloteros.app.peloteros.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,16 +33,23 @@ public class SecurityConfig {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-
+    
+   
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+	        .cors().and() // Habilita CORS
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/usuarios/login").permitAll()
+                .requestMatchers("/usuarios/buscarxcorreo/**").permitAll()
+                .requestMatchers("/correo/recuperarcontraseña").permitAll()
+                .requestMatchers("/api/create").permitAll()
+                .requestMatchers("/api/confirmpayment").permitAll()
+                .requestMatchers("/api/cancelpayment").permitAll()
                 .requestMatchers("/usuarios/agregar").permitAll()
-                .requestMatchers("/canchas/xfechanum/**").permitAll()
-                .requestMatchers("/canchas/xfechanum/**").permitAll()
+                .requestMatchers("/canchas/xfechanum/**").permitAll()                
                 .requestMatchers("/horarioscanchas/**").permitAll()
                 .requestMatchers("/reservas/**").permitAll()
                 .anyRequest().authenticated())
@@ -69,4 +80,4 @@ public class SecurityConfig {
                    .authenticationProvider(authenticationProvider())
                    .build();
     }
-}
+ }
